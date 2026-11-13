@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaunchLayer — Premium Web Development</title>
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('launchlayer_theme_mode');
+        if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bgLight: '#F9F8F6',
+            bgDark: '#0A0A0A',
+            cardDark: '#121212',
+            borderDark: 'rgba(255, 255, 255, 0.08)',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Cormorant Garamond"', '"Newsreader"', '"Playfair Display"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            syne: ['Syne', 'sans-serif'],
+          },
+          animation: {
+            'float-slow': 'float 8s ease-in-out infinite',
+            'float-delayed': 'float 9s ease-in-out 2s infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.3', transform: 'scale(1)' },
+              '50%': { opacity: '0.6', transform: 'scale(1.08)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F9F8F6;
+      --ink: #0A0A0A;
+      --accent: #E8E6E3;
+      --dim: rgba(10, 10, 10, 0.02);
+      --card-bg: #FFFFFF;
+      --card-border: rgba(10, 10, 10, 0.06);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    html.dark {
+      --bg: #0A0A0A;
+      --ink: #F9F8F6;
+      --accent: #1C1C1C;
+      --dim: rgba(255, 255, 255, 0.025);
+      --card-bg: #121212;
+      --card-border: rgba(255, 255, 255, 0.08);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      color: var(--ink);
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      /* Native momentum scrolling for iOS WebKit */
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: none;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--ink);
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Active scroll gesture optimizations: pause ambient animations and laser sweeps during scrolling */
+    body.is-scrolling .pause-on-scroll,
+    body.is-scrolling .marquee-laser,
+    body.is-scrolling .marquee-laser-1,
+    body.is-scrolling .marquee-laser-2,
+    body.is-scrolling .ambient-orb,
+    body.is-scrolling .ambient-orb-pulse,
+    body.is-scrolling .ambient-orb-1-pulse,
+    body.is-scrolling .ambient-orb-2-pulse,
+    body.is-scrolling .ambient-orb-3-pulse {
+      animation-play-state: paused !important;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--ink);
+      border-radius: 10px;
+    }
+
+    /* Editorial Typography */
+    .text-outline {
+      -webkit-text-stroke: 1px currentColor;
+      color: transparent;
+    }
+
+    .text-balance {
+      text-wrap: balance;
+    }
+
+    /* Custom Aesthetic Cursor Discipline for Desktop Devices */
+    @media (hover: hover) and (pointer: fine) {
+      html.custom-cursor-active {
+        cursor: default;
+      }
+      html.custom-cursor-active button,
+      html.custom-cursor-active a,
+      html.custom-cursor-active [role="button"],
+      html.custom-cursor-active .cursor-pointer,
+      html.custom-cursor-active .premium-link {
+        cursor: pointer !important;
+      }
+      html.custom-cursor-active input,
+      html.custom-cursor-active textarea,
+      html.custom-cursor-active [contenteditable="true"] {
+        cursor: text !important;
+      }
+    }
+
+    button,
+    a,
+    [role="button"],
+    .cursor-pointer,
+    .premium-link,
+    label,
+    select,
+    summary {
+      cursor: pointer;
+    }
+
+    input,
+    textarea,
+    [contenteditable="true"] {
+      cursor: text;
+    }
+
+    /* Subtle Scaffold Grid */
+    .scaffold {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 0 1.25rem;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @media (min-width: 768px) {
+      .scaffold { 
+        grid-template-columns: repeat(8, 1fr);
+        padding: 0 3rem; 
+      }
+    }
+    @media (min-width: 1024px) {
+      .scaffold { 
+        grid-template-columns: repeat(12, 1fr);
+        padding: 0 4rem; 
+      }
+    }
+    @media (min-width: 1280px) {
+      .scaffold { padding: 0 6rem; }
+    }
+    .scaffold-line {
+      border-right: 1px solid var(--dim);
+      height: 100%;
+      transition: border-color 0.4s ease;
+    }
+
+    /* Content Visibility Guarantee: Content is permanently 100% visible across all devices */
+    .reveal,
+    .reveal-item,
+    .reveal-visible,
+    .reveal-visible > .reveal-item,
+    .reveal-visible .reveal,
+    .reveal-visible .reveal-item {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+    }
+
+    /* GPU Keyframe Breathing for Ambient Orbs with native pause-on-scroll capability */
+    @keyframes ambient-pulse-1 {
+      0%, 100% { transform: scale3d(1, 1, 1); }
+      50% { transform: scale3d(1.05, 1.05, 1); }
+    }
+    @keyframes ambient-pulse-2 {
+      0%, 100% { transform: scale3d(1, 1, 1); }
+      50% { transform: scale3d(1.04, 1.04, 1); }
+    }
+    @keyframes ambient-pulse-3 {
+      0%, 100% { transform: scale3d(1, 1, 1); }
+      50% { transform: scale3d(1.06, 1.06, 1); }
+    }
+
+    .ambient-orb-1-pulse {
+      animation: ambient-pulse-1 16s ease-in-out infinite;
+      will-change: transform;
+    }
+    .ambient-orb-2-pulse {
+      animation: ambient-pulse-2 20s ease-in-out infinite;
+      will-change: transform;
+    }
+    .ambient-orb-3-pulse {
+      animation: ambient-pulse-3 18s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    /* Utility to hide scrollbars on horizontal swipe containers */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Fluid Modular Typography Scale (Calibrated for All Device Viewports) */
+    .fluid-hero-title {
+      font-size: clamp(2rem, 1rem + 4.8vw, 8rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+    }
+
+    .fluid-section-title {
+      font-size: clamp(1.85rem, 1rem + 3.5vw, 6rem);
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+    }
+
+    .fluid-item-title {
+      font-size: clamp(1.25rem, 0.95rem + 1.6vw, 3.5rem);
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .fluid-lead {
+      font-size: clamp(0.95rem, 0.85rem + 0.55vw, 1.85rem);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+
+    .fluid-body-lg {
+      font-size: clamp(0.95rem, 0.88rem + 0.25vw, 1.25rem);
+      line-height: 1.75;
+    }
+
+    .fluid-mono-meta {
+      font-size: clamp(0.65rem, 0.6rem + 0.15vw, 0.82rem);
+      letter-spacing: 0.2em;
+    }
+
+    .font-syne { font-family: 'Syne', -apple-system, sans-serif; letter-spacing: 0.01em; }
+    .font-serif { font-family: 'Playfair Display', 'Newsreader', Georgia, serif; font-feature-settings: "liga" 1, "calt" 1; letter-spacing: 0.005em; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; font-feature-settings: "zero" 1; letter-spacing: 0.04em; }
+    .font-sans { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; letter-spacing: 0; }
+    
+    ::selection { background: var(--ink); color: var(--bg); }
+
+    .premium-link {
+      position: relative;
+      display: inline-block;
+    }
+    .premium-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+    .premium-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    @keyframes loading-line {
+      0% { transform: scaleX(0); transform-origin: left; }
+      50% { transform: scaleX(1); transform-origin: left; }
+      50.1% { transform: scaleX(1); transform-origin: right; }
+      100% { transform: scaleX(0); transform-origin: right; }
+    }
+    .animate-loading-line { animation: loading-line 2s cubic-bezier(0.76, 0, 0.24, 1) infinite; }
+
+    /* GPU Keyframe Marquee & Laser Sweeps (pause-on-scroll compliant) */
+    @keyframes marquee-scroll {
+      0% { transform: translate3d(-50%, 0, 0); }
+      100% { transform: translate3d(0%, 0, 0); }
+    }
+    .marquee-ticker {
+      animation: marquee-scroll 36s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes laser-sweep-1 {
+      0% { transform: translate3d(-100%, 0, 0); }
+      100% { transform: translate3d(200%, 0, 0); }
+    }
+    .marquee-laser-1 {
+      animation: laser-sweep-1 5.5s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes laser-sweep-2 {
+      0% { transform: translate3d(200%, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+    .marquee-laser-2 {
+      animation: laser-sweep-2 6.8s linear infinite;
+      will-change: transform;
+    }
+  </style>
+</head>
+<body>
+  <div class="scaffold">
+    <div class="scaffold-line"></div><div class="scaffold-line"></div><div class="scaffold-line"></div>
+    <div class="scaffold-line"></div><div class="scaffold-line"></div><div class="scaffold-line"></div>
+    <div class="scaffold-line"></div><div class="scaffold-line"></div><div class="scaffold-line"></div>
+    <div class="scaffold-line"></div><div class="scaffold-line"></div><div class="scaffold-line"></div>
+  </div>
+
+  <div id="root"></div>
+  <div id="modal-root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
